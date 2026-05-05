@@ -91,8 +91,11 @@ def compute_measurement_conversion_time(config):
             temperature_config.get(CONF_OVERSAMPLING)
         ]
 
+    # Page 11 of datasheet indicates a Start-up time from STANDBY (t_startup) of max 3ms
+    T_STARTUP = 3.0
+
     # Datasheet indicates a 5% possible error in each conversion time listed
-    return math.ceil(1.05 * (pressure_conversion_time + temperature_conversion_time))
+    return math.ceil(1.05 * (pressure_conversion_time + temperature_conversion_time) + T_STARTUP)
 
 
 CONFIG_SCHEMA_BASE = cv.Schema(
